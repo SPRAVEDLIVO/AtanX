@@ -5,29 +5,34 @@ settings = settings.settigns(file="packages.json")
 def MyStrJoin(lst):
     s = ""
     for i, item in enumerate(lst):
-        if not i % len(lst) and len(lst) != 1:
+        if not i % len(lst)-1:
             s+="``%s``, " % item
         else:
             s+="``%s``" % item
     return  s
 @cmd.event(command="info", aliases=["help"], require="self")
 def info(argdict, args):
+    parsedict = {}
     msg = argdict[commands.Locals.message]
     if args == None:
-        embed = Embed(title="Information about all commands.")       
-        for category in settings.keys():
-            embed.add_field(name=category.upper(), value=MyStrJoin(list(settings[category].keys())), inline=False)
+        embed = Embed(title="Information about all commands.", color=0x5a5ec)       
+        for module in settings.keys():
+            sub = settings.get(module).get("category")
+            parsedict.update({sub:[module]}) if parsedict.get(sub) == None else parsedict.get(sub).append(module)
+        for cat in parsedict.keys():
+            embed.add_field(name=cat.upper(), value=MyStrJoin(parsedict.get(cat)), inline=False)
         embed.set_footer(icon_url=msg.author.avatar_url, text=msg.author.name+'#'+msg.author.discriminator)
         return embed
     else:
         module = args[0]
-        embed = Embed(title="Information about module %s" % module.upper())  
-        for category in settings.keys():
-            if module in settings[category].keys():
-                for k, v in settings[category][module].items():
-                    embed.add_field(name=k.upper(), value="``%s``" % v, inline=False)
-        embed.set_footer(icon_url=msg.author.avatar_url, text=msg.author.name+'#'+msg.author.discriminator)
-        return embed
-@cmd.event(command="da", require="self")
-def asf(argdict, args):
-    print("a")
+        sub = settings.get(module)
+        if sub != None:
+            embed = Embed(title="Information about command %s" % module.upper(), color=0x5a5ec9)
+            for k in sub.keys():
+                embed.add_field(name=k.upper(), value="``%s``" % sub.get(k))
+            embed.set_footer(icon_url=msg.author.avatar_url, text=msg.author.name+'#'+msg.author.discriminator)
+            return embed
+        else:
+            return "No information about command founded."
+def GetCategorie(module):
+    return settings.get(module).get("categorie")

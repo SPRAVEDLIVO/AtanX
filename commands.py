@@ -61,7 +61,7 @@ def SetCommand(command, args, s):
                 req = types["require"]
                 if typ == "sync":
                     result = func(args) if req == "default" else func(s, args)
-                    utils.syncsender(msg, result)
+                    utils.syncsender(command, msg, result)
                 elif typ == "async":
                     utils.awaiter(func(args)) if req == "default" else utils.awaiter(func(s, args))
     else:
