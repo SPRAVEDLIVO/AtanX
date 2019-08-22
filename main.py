@@ -2,7 +2,7 @@ import discord, settings, commands
 config = settings.settigns()
 bot_tocken = config["bot_tocken"]
 command_tocken = config["command_tocken"]
-commands.main()
+commands.ImportTools().ImportFromPath()
 client = discord.Client()
 
 @client.event

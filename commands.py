@@ -1,28 +1,30 @@
-import importlib, os
+import importlib, os, utils
 events = {}
 commands = {}
 modules = {}
 banned = ['__pycache__']
-def main():
-    for pl in os.listdir("commands/"):
-        if pl not in banned:
-            path = pl.replace(".py", "")
-            spec = importlib.util.spec_from_file_location(path, "commands/{}".format(pl))
-            foo = importlib.util.module_from_spec(spec)
-            modules.update({path:foo})
-            spec.loader.exec_module(foo)
-def dynamic_reload(module):
-    for k, v in modules.items():
-        if k == module:
+
+class ImportTools():
+    def ImportFromPath(self):
+        for pl in os.listdir("commands/"):
+            if pl not in banned:
+                path = pl.replace(".py", "")
+                spec = importlib.util.spec_from_file_location(path, "commands/{}".format(pl))
+                foo = importlib.util.module_from_spec(spec)
+                modules.update({path:foo})
+                spec.loader.exec_module(foo)
+    def dynamic_reload(self, module):
+        for k, v in modules.items():
+            if k == module:
+                modules.update({k:importlib.reload(v)})
+    def reload_all(self, ):
+        for k, v in modules.items():
             modules.update({k:importlib.reload(v)})
-def reload_all():
-    for k, v in modules.items():
-        modules.update({k:importlib.reload(v)})
-def dynamic_import(module):
-    spec = importlib.util.spec_from_file_location(module, "commands/{}.py".format(module))
-    foo = importlib.util.module_from_spec(spec)
-    modules.update({module:foo})
-    spec.loader.exec_module(foo)
+    def dynamic_import(self, module):
+        spec = importlib.util.spec_from_file_location(module, "commands/{}.py".format(module))
+        foo = importlib.util.module_from_spec(spec)
+        modules.update({module:foo})
+        spec.loader.exec_module(foo)
 class Event(object):
     def SetEvent(self, event, s, *args):
         if events.get(event) == None:
@@ -33,7 +35,7 @@ class Event(object):
                     func(*args)
                 elif req == "self":
                     func(s, *args)
-    def event(self, event, require="default"):
+    def event(self, event, require="default", type="sync"):
         def func_wrap(func):
             if event not in events.keys():
                 events.update({event:[{func:require}]})
@@ -41,21 +43,29 @@ class Event(object):
                 events.get(event).append({func:require})
         return func_wrap
 class Command(object):
-    def event(self, command, require="default"):
+    def event(self, command, require="default", type="sync", aliases=[]):
         def func_wrap(func):
             if command not in commands.keys():
-                commands.update({command:[{func:require}]})
+                commands.update({command:[{func:{"require":require, "type":type}}]})
+                for alias in aliases:
+                    commands.update({alias:[{func:{"require":require, "type":type}}]})
             else:
-                commands.get(command).append({func:require})
+                commands.get(command).append({func:{"require":require, "type":type}})
         return func_wrap
+def result_handler(msg, result):
+    utils.syncsender(msg, result)
 def SetCommand(command, args, s):
     if command in commands.keys():
+        msg = s[Locals.message]
         for d in commands.get(command):
-            for func, req in d.items():
-                if req == "default":
-                    func(args)
-                elif req == "self":
-                    func(s, args)
+            for func, types in d.items():
+                typ = types["type"]
+                req = types["require"]
+                if typ == "sync":
+                    result = func(args) if req == "default" else func(s, args)
+                    result_handler(msg, result)
+                elif typ == "async":
+                    utils.awaiter(func(args)) if req == "default" else utils.awaiter(func(s, args))
     else:
         return False
 class Locals:
