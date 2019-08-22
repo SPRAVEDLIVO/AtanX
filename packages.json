@@ -1,5 +1,8 @@
 {
-    "Info": {
-        "description": "Information about all commands."
+    "Information": {
+        "info" : {
+        "description": "Information about all commands.",
+        "aliases": "info, help"
+        }
     }
 }

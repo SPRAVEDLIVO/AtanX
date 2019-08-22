@@ -1,4 +1,4 @@
-import importlib, os, utils
+import importlib, os, utils, discord
 events = {}
 commands = {}
 modules = {}
@@ -52,8 +52,6 @@ class Command(object):
             else:
                 commands.get(command).append({func:{"require":require, "type":type}})
         return func_wrap
-def result_handler(msg, result):
-    utils.syncsender(msg, result)
 def SetCommand(command, args, s):
     if command in commands.keys():
         msg = s[Locals.message]
@@ -63,7 +61,7 @@ def SetCommand(command, args, s):
                 req = types["require"]
                 if typ == "sync":
                     result = func(args) if req == "default" else func(s, args)
-                    result_handler(msg, result)
+                    utils.syncsender(msg, result)
                 elif typ == "async":
                     utils.awaiter(func(args)) if req == "default" else utils.awaiter(func(s, args))
     else:

@@ -15,7 +15,7 @@ async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=game)
 @client.event
 async def on_message(message):
-    if (message.content[0] == command_tocken) and (not message.author.bot):
+    if message.content.startswith(command_tocken) and (not message.author.bot):
         # Slice message content and split it to get abstract request
         content = message.content[len(command_tocken):].split(' ')
         command = content[0]
