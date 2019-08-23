@@ -8,34 +8,34 @@ async def rotate(argdict, args):
     assert len(args) == 1
     degr = int(args[0])
     msg = argdict[commands.Locals.message]
-    utils.syncsender("rotate", msg, "Generating a rotated image, please, wait.")
     attachment = msg.attachments[0]
+    embed = utils.DefaultEmbed("rotate", msg, "Here's new generated image.")
     pathto = "thumbnails/%s" % attachment.filename
     await attachment.save(pathto)
     img = Image.open(pathto)
     rotated = img.rotate(degr)
     rotated.save(pathto)
-    await msg.channel.send(file=File(pathto))
+    await msg.channel.send(embed=embed, file=File(pathto))
     os.remove(pathto)
     return 0
 @command.event(command="mirrow", require="self", type="async")
 async def mirrow(argdict, args):
     msg = argdict[commands.Locals.message]
-    utils.syncsender("mirrow", msg, "Generating a mirrowed image, please, wait.")
+    embed = utils.DefaultEmbed("mirrow", msg, "Here's new generated image.")
     attachment = msg.attachments[0]
     pathto = "thumbnails/%s" % attachment.filename
     await attachment.save(pathto)
     img = Image.open(pathto)
     mirrowed = img.transpose(Image.FLIP_LEFT_RIGHT)
     mirrowed.save(pathto)
-    await msg.channel.send(file=File(pathto))
+    await msg.channel.send(embed=embed, file=File(pathto))
     os.remove(pathto)
     return 0
 @command.event(command="grayscale", require="self", type="async")
 async def grayscale(argdict, args):
     # Saving code
     msg = argdict[commands.Locals.message]
-    utils.syncsender("grayscale", msg, "Generating a grayscaled image, please, wait.")
+    embed = utils.DefaultEmbed("grayscale", msg, "Here's new generated image.")
     attachment = msg.attachments[0]
     pathto = "thumbnails/%s" % attachment.filename
     await attachment.save(pathto)
@@ -55,14 +55,14 @@ async def grayscale(argdict, args):
     image.save(pathto)
     del draw
     # Sender and finalizer
-    await msg.channel.send(file=File(pathto))
+    await msg.channel.send(embed=embed, file=File(pathto))
     os.remove(pathto)
     return 0
 @command.event(command="negativescale", require="self", type="async")
 async def negative(argdict, args):
     # Saving code
     msg = argdict[commands.Locals.message]
-    utils.syncsender("negativescale", msg, "Generating a negativescaled image, please, wait.")
+    embed = utils.DefaultEmbed("negativescale", msg, "Here's new generated image.")
     attachment = msg.attachments[0]
     pathto = "thumbnails/%s" % attachment.filename
     await attachment.save(pathto)
@@ -81,7 +81,7 @@ async def negative(argdict, args):
     image.save(pathto)
     del draw
     # Sender and finalizer
-    await msg.channel.send(file=File(pathto))
+    await msg.channel.send(embed=embed, file=File(pathto))
     os.remove(pathto)
     return 0
 @command.event(command="blackscale", require="self", type="async")
@@ -89,7 +89,7 @@ async def blackscale(argdict, args):
     factor = int(args[0]) if args != None else 70
     # Saving code
     msg = argdict[commands.Locals.message]
-    utils.syncsender("blackscale", msg, "Generating a blackscaled image, please, wait.")
+    embed = utils.DefaultEmbed("rotate", msg, "Here's new generated image.")
     attachment = msg.attachments[0]
     pathto = "thumbnails/%s" % attachment.filename
     await attachment.save(pathto)
@@ -113,7 +113,7 @@ async def blackscale(argdict, args):
     image.save(pathto)
     del draw
     # Sender and finalizer
-    await msg.channel.send(file=File(pathto))
+    await msg.channel.send(embed=embed, file=File(pathto))
     os.remove(pathto)
     return 0
 @command.event(command="addnoise", require="self", type="async")
@@ -121,7 +121,7 @@ async def addnoise(argdict, args):
     factor = int(args[0]) if args != None else 20
     # Saving code
     msg = argdict[commands.Locals.message]
-    utils.syncsender("addnoise", msg, "Generating an image with noise, please, wait.")
+    embed = utils.DefaultEmbed("addnoise", msg, "Here's new generated image.")
     attachment = msg.attachments[0]
     pathto = "thumbnails/%s" % attachment.filename
     await attachment.save(pathto)
@@ -153,6 +153,6 @@ async def addnoise(argdict, args):
     image.save(pathto)
     del draw
     # Sender and finalizer
-    await msg.channel.send(file=File(pathto))
+    await msg.channel.send(embed=embed, file=File(pathto))
     os.remove(pathto)
     return 0

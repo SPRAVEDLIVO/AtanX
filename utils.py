@@ -6,7 +6,7 @@ def GetCategorie(module):
     except:
         return "None"
 def DefaultEmbed(command, msg, result):
-    if len(command.split("\n")) == 1:
+    if len(result.split("\n")) == 1:
         embed=discord.Embed(title="/{}/{}".format(GetCategorie(command), command), description="Result -> ``%s``" % result, color=0x5a5ec9)
         embed.set_footer(icon_url=msg.author.avatar_url, text=msg.author.name+'#'+msg.author.discriminator)
         return embed

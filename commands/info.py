@@ -10,7 +10,7 @@ def MyStrJoin(lst):
         else:
             s+="``%s``" % item
     return  s
-@cmd.event(command="info", aliases=["help"], require="self")
+@cmd.event(command="info", aliases=["help", "?"], require="self")
 def info(argdict, args):
     parsedict = {}
     msg = argdict[commands.Locals.message]

@@ -38,5 +38,25 @@
         "description": "Generates a image with noise",
         "usage":"addnoise <File>",
         "category": "images"
+    },
+    "textart": {
+        "description": "Generates a textart from text with given font",
+        "usage":"textart <font> <text>",
+        "category": "other"
+    },
+    "userinfo": {
+        "description": "Shows user info",
+        "usage":"userinfo <name>",
+        "category": "discord"
+    },
+    "ban": {
+        "description": "Bans user",
+        "usage":"ban <name>",
+        "category": "discord"
+    },
+    "kick": {
+        "description": "Kicks user",
+        "usage":"kick <name>",
+        "category": "discord"
     }
 }
