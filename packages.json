@@ -49,6 +49,10 @@
         "usage":"userinfo <name>",
         "category": "discord"
     },
+    "serverinfo": {
+        "description": "Shows server info",
+        "category": "discord"
+    },
     "ban": {
         "description": "Bans user",
         "usage":"ban <name>",

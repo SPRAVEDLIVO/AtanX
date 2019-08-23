@@ -89,7 +89,7 @@ async def blackscale(argdict, args):
     factor = int(args[0]) if args != None else 70
     # Saving code
     msg = argdict[commands.Locals.message]
-    embed = utils.DefaultEmbed("rotate", msg, "Here's new generated image.")
+    embed = utils.DefaultEmbed("blackscale", msg, "Here's new generated image.")
     attachment = msg.attachments[0]
     pathto = "thumbnails/%s" % attachment.filename
     await attachment.save(pathto)

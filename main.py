@@ -17,7 +17,7 @@ async def on_message(message):
     if message.content.startswith(command_tocken) and (not message.author.bot):
         # Slice message content and split it to get abstract request
         content = message.content[len(command_tocken):].split(' ')
-        command = content[0]
+        command = content[0].lower()
         args = content[1:] if len(content) >= 2 else None
         commands.SetCommand(command, args, {"message":message, "client":client})
 client.run(bot_tocken)
