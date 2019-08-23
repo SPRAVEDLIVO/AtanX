@@ -5,7 +5,7 @@ settings = settings.settigns(file="packages.json")
 def MyStrJoin(lst):
     s = ""
     for i, item in enumerate(lst):
-        if not i % len(lst)-1:
+        if i != len(lst)-1:
             s+="``%s``, " % item
         else:
             s+="``%s``" % item
@@ -15,7 +15,7 @@ def info(argdict, args):
     parsedict = {}
     msg = argdict[commands.Locals.message]
     if args == None:
-        embed = Embed(title="Information about all commands.", color=0x5a5ec)       
+        embed = Embed(title="Information about all commands.", color=0x5a5ec9)       
         for module in settings.keys():
             sub = settings.get(module).get("category")
             parsedict.update({sub:[module]}) if parsedict.get(sub) == None else parsedict.get(sub).append(module)
@@ -27,9 +27,9 @@ def info(argdict, args):
         module = args[0]
         sub = settings.get(module)
         if sub != None:
-            embed = Embed(title="Information about command %s" % module.upper(), color=0x5a5ec9)
+            embed = Embed(title="Information about command %s" % module.capitalize(), color=0x5a5ec9)
             for k in sub.keys():
-                embed.add_field(name=k.upper(), value="``%s``" % sub.get(k))
+                embed.add_field(name=k.upper(), value="``%s``" % sub.get(k), inline=False)
             embed.set_footer(icon_url=msg.author.avatar_url, text=msg.author.name+'#'+msg.author.discriminator)
             return embed
         else:

@@ -29,3 +29,5 @@ def hs(args):
     elif hashtype == 'shake_128': return hashlib.new("shake_128", strtohash.encode("utf-8")).hexdigest()
     elif hashtype == 'blake2s256': return hashlib.new("blake2s256", strtohash.encode("utf-8")).hexdigest()
     #EO procedural generated code.
+    else:
+        return "Unknown hash algorythm."

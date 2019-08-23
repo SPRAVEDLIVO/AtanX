@@ -4,7 +4,6 @@ bot_tocken = config["bot_tocken"]
 command_tocken = config["command_tocken"]
 commands.ImportTools().ImportFromPath()
 client = discord.Client()
-
 @client.event
 async def on_ready():
     print('Logged in as')
