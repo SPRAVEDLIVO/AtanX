@@ -10,7 +10,7 @@ def userinfo(argdict, args):
     us_id = user.id
     top_role = str(user.top_role)
     created_at = user.created_at.strftime("%Y-%m-%d %H:%M:%S")
-    return "\nName: {}\nID: {}\nJoined to DISCORD: {}\nJoined to server: {}\nHighest role: {}".format(name, us_id, created_at, joined_at, top_role)
+    return "\nName: ``{}``\nID: ``{}``\nJoined to DISCORD: ``{}``\nJoined to server: ``{}``\nHighest role: ``{}``".format(name, us_id, created_at, joined_at, top_role)
 @command.event(command="serverinfo", require="self")
 def serverinfo(argdict, args):
     msg = argdict["message"]
@@ -21,7 +21,7 @@ def serverinfo(argdict, args):
     created_at = guild.created_at.strftime("%Y-%m-%d %H:%M:%S")
     members = guild.member_count
     region = guild.region
-    return "\nName: {}\nID: {}\nOwner: {}\nCreated at: {}\nMembers count: {}\nRegion: {}".format(name, server_id, owner, created_at,members, region)
+    return "\nName: ``{}``\nID: ``{}``\nOwner: ``{}``\nCreated at: ``{}``\nMembers count: ``{}``\nRegion: ``{}``".format(name, server_id, owner, created_at,members, region)
 @command.event(command="ban", require="self")
 def ban(argdict, args):
     assert len(args) >= 1

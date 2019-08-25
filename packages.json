@@ -62,5 +62,25 @@
         "description": "Kicks user",
         "usage":"kick <name>",
         "category": "discord"
+    },
+    "text2base": {
+        "description": "Converts text to base with given bitness (64 as default",
+        "usage":"text2base <bitness> (optional), <text>",
+        "category": "converters"
+    },
+    "base2text": {
+        "description": "Converts base to text with given bitness (64 as default)",
+        "usage":"base2text <bitness> (optional), <text>",
+        "category": "converters"
+    },
+    "text2ascii": {
+        "description": "Converts any text to ascii numbers and shows chars sum",
+        "usage":"text2ascii <text>",
+        "category": "converters"
+    },
+    "ascii2text": {
+        "description": "Converts any string of ascii numbers to text",
+        "usage":"ascii2text <text>",
+        "category": "converters"
     }
 }

@@ -1,4 +1,4 @@
-import importlib, os, utils, discord
+import importlib, os, utils, discord, difflib
 events = {}
 commands = {}
 modules = {}
@@ -53,7 +53,8 @@ class Command(object):
                 commands.get(command).append({func:{"require":require, "type":type}})
         return func_wrap
 def SetCommand(command, args, s):
-    if command in commands.keys():
+    cmds = commands.keys()
+    if command in cmds:
         msg = s[Locals.message]
         for d in commands.get(command):
             for func, types in d.items():
@@ -65,7 +66,18 @@ def SetCommand(command, args, s):
                 elif typ == "async":
                     utils.awaiter(func(args)) if req == "default" else utils.awaiter(func(s, args))
     else:
-        return False
+        SimillarList = difflib.get_close_matches(command, cmds)
+        if len(SimillarList) >= 1:
+            return SetCommand(SimillarList[0], args, s) 
+    return
+# Function to compare that all modules are descriped in packages.json at runtime
+def compare():
+    import settings
+    settings = settings.settigns("packages.json")
+    print(settings)
+    for key in commands.keys():
+        if key not in settings.keys():
+            print(key)
 class Locals:
     client = "client"
     message = "message"
