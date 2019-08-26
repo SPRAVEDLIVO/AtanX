@@ -9,6 +9,16 @@
         "available": "whirlpool, sha1, ripemd160, sha3_384, blake2s256, sha3_512, shake_128, md4, blake2b, sha3_224, sha256, blake2s, blake2b512, sha512, md5, sha384, md5-sha1, mdc2, sha224, shake_256, sha3_256",
         "category": "crypto"
     },
+    "cesar":{
+        "description": "Generates cesar encrypted/decrypted text from text with given factor",
+        "category":"crypto",
+        "usage": "cesar <mode> <factor> <text>"
+    },
+    "vigenere":{
+        "description": "Generates vigenere encrypted/decrypted text from text with given key",
+        "category":"crypto",
+        "usage": "vigenere <mode> <key> <text>"
+    }, 
     "rotate": {
         "description": "Rotate an image by given degree",
         "usage":"rotate <degree> <File>",
@@ -84,8 +94,38 @@
         "category": "converters"
     },
     "base2base": {
-        "description": "Convers number from one base to another",
+        "description": "Converts number from one base to another",
         "usage":"base2base <from_base> <to_base> <number>",
+        "category": "converters"
+    },
+    "text2morse": {
+        "description": "Converts text to morse encoding",
+        "usage":"text2morse <text>",
+        "category": "converters"
+    },
+    "morse2text": {
+        "description": "Converts text in morse encoding to regular text",
+        "usage":"morse2text <text>",
+        "category": "converters"
+    },
+    "text2spelling": {
+        "description": "Converts text to spilling NATO encoding",
+        "usage":"text2spelling <text>",
+        "category": "converters"
+    },
+    "spilling2text": {
+        "description": "Converts spilling NATO encoding to text",
+        "usage":"text2spelling <text>",
+        "category": "converters"
+    },
+    "rbg2hex": {
+        "description": "Converts RGB to HEX",
+        "usage":"rbg2hex <R> <G> <B>",
+        "category": "converters"
+    },
+    "hex2rgb": {
+        "description": "Converts HEX to RGB",
+        "usage":"hex2rgb",
         "category": "converters"
     }
 }

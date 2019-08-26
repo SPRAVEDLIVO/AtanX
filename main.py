@@ -1,4 +1,4 @@
-import discord, settings, commands, datetime
+import discord, settings, commands
 config = settings.settings()
 bot_tocken = config["bot_tocken"]
 command_tocken = config["command_tocken"]
