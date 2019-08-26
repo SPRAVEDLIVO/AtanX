@@ -60,9 +60,18 @@ def SetCommand(command, args, s):
             for func, types in d.items():
                 typ = types["type"]
                 req = types["require"]
+                # Check if LS flag in message
+                if args != None and args[-1] == "!ls":
+                    del args[-1]
+                    ls_flag = True
+                    # Then set args to None back
+                    if len(args) == 0:
+                        args = None
+                else:
+                    ls_flag = False
                 if typ == "sync":
                     result = func(args) if req == "default" else func(s, args)
-                    utils.syncsender(command, msg, result)
+                    utils.syncsender(command, msg, result, ls_flag=ls_flag)
                 elif typ == "async":
                     utils.awaiter(func(args)) if req == "default" else utils.awaiter(func(s, args))
     else:
@@ -73,7 +82,7 @@ def SetCommand(command, args, s):
 # Function to compare that all modules are descriped in packages.json at runtime
 def compare():
     import settings
-    settings = settings.settigns("packages.json")
+    settings = settings.settings("packages.json")
     print(settings)
     for key in commands.keys():
         if key not in settings.keys():

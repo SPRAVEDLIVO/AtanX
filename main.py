@@ -1,5 +1,5 @@
-import discord, settings, commands
-config = settings.settigns()
+import discord, settings, commands, datetime
+config = settings.settings()
 bot_tocken = config["bot_tocken"]
 command_tocken = config["command_tocken"]
 commands.ImportTools().ImportFromPath()

@@ -1,4 +1,5 @@
 import commands, base64
+from string import ascii_lowercase, digits
 cmd = commands.Command()
 @cmd.event(command="text2base")
 def str2base(args):
@@ -15,7 +16,6 @@ def str2base(args):
                 return base64.b85encode(sub.encode("utf-8").decode("utf-8"))
     else:
         sub = " ".join(args[0:])
-        print(sub)
         return base64.b64encode(sub.encode("utf-8")).decode("utf-8")
 @cmd.event(command="base2text")
 def base2str(args):
@@ -59,3 +59,27 @@ def ascii2text(args):
         sm+=a
         st+=str(chr(a))
     return 'Numbers sum: ``%s``\nNumbers as chars: ``%s``' % (sm, st)
+def convert_base(num, to_base=10, from_base=10):
+    n = int(num)
+    alphabet = digits+ascii_lowercase
+    if n < to_base:
+        return alphabet[n]
+    else:
+        return convert_base(n // to_base, to_base) + alphabet[n % to_base]
+@cmd.event(command="base2base")
+def base2base(args):
+    assert args != None
+    assert len(args) >= 3
+    frombase = int(args[0])
+    tobase = int(args[1])
+    num = args[2]
+    if "0x" in num or "0d" in num or "0o" in num:
+        num = num[2:]
+    convres =  convert_base(num, to_base=tobase, from_base=frombase)
+    if tobase == 8:
+            return "0o%s" % convres
+    elif tobase == 10:
+        return "0d%s" % convres
+    elif tobase == 16:
+        return "0x%s" % convres
+    return convres

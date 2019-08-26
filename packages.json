@@ -64,7 +64,7 @@
         "category": "discord"
     },
     "text2base": {
-        "description": "Converts text to base with given bitness (64 as default",
+        "description": "Converts text to base with given bitness (64 as default)",
         "usage":"text2base <bitness> (optional), <text>",
         "category": "converters"
     },
@@ -81,6 +81,11 @@
     "ascii2text": {
         "description": "Converts any string of ascii numbers to text",
         "usage":"ascii2text <text>",
+        "category": "converters"
+    },
+    "base2base": {
+        "description": "Convers number from one base to another",
+        "usage":"base2base <from_base> <to_base> <number>",
         "category": "converters"
     }
 }

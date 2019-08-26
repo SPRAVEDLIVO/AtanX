@@ -1,7 +1,7 @@
 import settings, commands, os
 from discord import Embed
 cmd = commands.Command()
-settings = settings.settigns(file="packages.json")
+settings = settings.settings(file="packages.json")
 def MyStrJoin(lst):
     s = ""
     for i, item in enumerate(lst):
