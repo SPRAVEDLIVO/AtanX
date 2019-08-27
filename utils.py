@@ -6,8 +6,9 @@ def GetCategorie(module):
     except:
         return "None"
 def DefaultEmbed(command, msg, result):
-    flag = "``" in result
+    flag = "``" in result or result[0] == "!"
     if flag:
+        if result[0] == "!": result = result[1:]
         embed=discord.Embed(title="/{}/{}".format(GetCategorie(command), command), description="Result -> %s" % result, color=0x5a5ec9)
     elif len(result.split("\n")) == 1 and not flag:
         embed=discord.Embed(title="/{}/{}".format(GetCategorie(command), command), description="Result -> ``%s``" % result, color=0x5a5ec9)
@@ -25,5 +26,5 @@ def awaiter(func):
     asyncio.create_task(func)
 def ModuleInitialez():
     return __import__("commands").Command()
-def Unpack(argdict):
+def Unpack(argdict: dict) -> tuple:
     return argdict["message"], argdict["client"]

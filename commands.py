@@ -38,9 +38,9 @@ class Event(object):
     def event(self, event, require="default", type="sync"):
         def func_wrap(func):
             if event not in events.keys():
-                events.update({event:[{func:require}]})
+                events.update({event:[{func:{"require":require, "type":type}}]})
             else:
-                events.get(event).append({func:require})
+                events.get(event).append({func:{"require":require, "type":type}})
         return func_wrap
 class Command(object):
     def event(self, command, require="default", type="sync", aliases=[]):
@@ -70,9 +70,26 @@ def SetCommand(command, args, s):
                 else:
                     ls_flag = False
                 if typ == "sync":
-                    result = func(args) if req == "default" else func(s, args)
+                    if req == "dafault":
+                        result = func(args)
+                    elif req == "self":
+                        result = func(s, args)
+                    elif req == "messgae":
+                        result = func(s["message"], args)
+                    elif req == "client":
+                        result = func(s["client"], args)
+                    else:
+                        result = func(args)
                     utils.syncsender(command, msg, result, ls_flag=ls_flag)
                 elif typ == "async":
+                    if req == "dafault":
+                        utils.awaiter(func(args))
+                    elif req == "self":
+                        utils.awaiter(func(s, args))
+                    elif req == "messgae":
+                        utils.awaiter(func(s["message"], args))
+                    elif req == "client":
+                        utils.awaiter(func(s["client"], args))
                     utils.awaiter(func(args)) if req == "default" else utils.awaiter(func(s, args))
     else:
         SimillarList = difflib.get_close_matches(command, cmds)

@@ -2,7 +2,7 @@ import settings, commands, os
 from discord import Embed
 cmd = commands.Command()
 settings = settings.settings(file="packages.json")
-def MyStrJoin(lst):
+def MyStrJoin(lst: list) -> str:
     s = ""
     for i, item in enumerate(lst):
         if i != len(lst)-1:
@@ -11,7 +11,7 @@ def MyStrJoin(lst):
             s+="``%s``" % item
     return  s
 @cmd.event(command="info", aliases=["help", "?"], require="self")
-def info(argdict, args):
+def info(argdict: dict, args: list):
     parsedict = {}
     msg = argdict[commands.Locals.message]
     if args == None:
@@ -34,5 +34,5 @@ def info(argdict, args):
             return embed
         else:
             return "No information about command founded."
-def GetCategorie(module):
+def GetCategorie(module: str) -> str:
     return settings.get(module).get("categorie")
