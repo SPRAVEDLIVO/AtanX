@@ -1,26 +1,8 @@
 import commands, base64, utils
+from rainbows import MORSE_CODE_DICT, NATO_Spelling, reverse_nato_spelling
 from string import ascii_lowercase, digits
 from random import randint
 cmd = commands.Command()
-
-# Globals, rainbow tables and stuff
-MORSE_CODE_DICT = { 'A':'.-', 'B':'-...', 
-                    'C':'-.-.', 'D':'-..', 'E':'.', 
-                    'F':'..-.', 'G':'--.', 'H':'....', 
-                    'I':'..', 'J':'.---', 'K':'-.-', 
-                    'L':'.-..', 'M':'--', 'N':'-.', 
-                    'O':'---', 'P':'.--.', 'Q':'--.-', 
-                    'R':'.-.', 'S':'...', 'T':'-', 
-                    'U':'..-', 'V':'...-', 'W':'.--', 
-                    'X':'-..-', 'Y':'-.--', 'Z':'--..', 
-                    '1':'.----', '2':'..---', '3':'...--', 
-                    '4':'....-', '5':'.....', '6':'-....', 
-                    '7':'--...', '8':'---..', '9':'----.', 
-                    '0':'-----', ', ':'--..--', '.':'.-.-.-', 
-                    '?':'..--..', '/':'-..-.', '-':'-....-', 
-                    '(':'-.--.', ')':'-.--.-'} 
-NATO_Spelling = {"A":"Alpha","B":"Beta","C":"Charlie","D":"Delta","E":"Echo","F":"Foxstrot","G":"Golf","H":"Hotel","I":"India","J":"Juliett","K":"Kilo","L":"Lima","M":"Mike","N":"November","O":"Oscar","P":"Papa","Q":"Quebec","R":"Romeo","S":"Sierra","T":"Tango","U":"Uniform","V":"Victor","W":"Whiskey","X":"X-Ray","Y":"Yankee","Z":"Zulu", "-":"Dash", " ":"(space)"}
-reverse_nato_spelling = {'Alpha': 'A', 'Beta': 'B', 'Charlie': 'C', 'Delta': 'D', 'Echo': 'E', 'Foxstrot': 'F', 'Golf': 'G', 'Hotel': 'H', 'India': 'I', 'Juliett': 'J','Kilo': 'K', 'Lima': 'L', 'Mike': 'M', 'November': 'N', 'Oscar': 'O', 'Papa': 'P', 'Quebec': 'Q', 'Romeo': 'R', 'Sierra': 'S', 'Tango': 'T', 'Uniform': 'U', 'Victor': 'V', 'Whiskey': 'W', 'X-Ray': 'X', 'Yankee': 'Y', 'Zulu': 'Z', 'Dash': '-', '(space)': ' '}
 @cmd.event(command="text2base")
 def str2base(args: list) -> str:
     assert args != None

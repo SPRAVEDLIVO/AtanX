@@ -1,4 +1,5 @@
 import asyncio, discord, settings
+from rainbows import EMOJI_UNICODE, EMOJI_ALIAS_UNICODE
 settings = settings.settings("packages.json")
 def GetCategorie(module):
     try:
@@ -28,3 +29,12 @@ def ModuleInitialez():
     return __import__("commands").Command()
 def Unpack(argdict: dict) -> tuple:
     return argdict["message"], argdict["client"]
+def LambdaDecorator(decorator, func):
+    return decorator(func)
+class ReactonEngine(object):
+    def MultiEmojies(self, message: discord.Message, emojies: list) -> bool:
+        for emoji in emojies:
+            try:
+                awaiter(message.add_reaction(EMOJI_UNICODE[":%s:" % emoji]))
+            except KeyError:
+                awaiter(message.add_reaction(EMOJI_ALIAS_UNICODE[":%s:" % emoji]))

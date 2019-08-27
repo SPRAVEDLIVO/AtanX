@@ -5,11 +5,13 @@ modules = {}
 banned = ['__pycache__']
 
 class ImportTools():
+    def __init__(self, path="commands/"):
+        self.path = path
     def ImportFromPath(self):
-        for pl in os.listdir("commands/"):
+        for pl in os.listdir(self.path):
             if pl not in banned:
                 path = pl.replace(".py", "")
-                spec = importlib.util.spec_from_file_location(path, "commands/{}".format(pl))
+                spec = importlib.util.spec_from_file_location(path, "{}{}".format(self.path, pl))
                 foo = importlib.util.module_from_spec(spec)
                 modules.update({path:foo})
                 spec.loader.exec_module(foo)
@@ -21,20 +23,28 @@ class ImportTools():
         for k, v in modules.items():
             modules.update({k:importlib.reload(v)})
     def dynamic_import(self, module):
-        spec = importlib.util.spec_from_file_location(module, "commands/{}.py".format(module))
+        spec = importlib.util.spec_from_file_location(module, "{}{}.py".format(self.path, module))
         foo = importlib.util.module_from_spec(spec)
         modules.update({module:foo})
         spec.loader.exec_module(foo)
 class Event(object):
     def SetEvent(self, event, s, *args):
         if events.get(event) == None:
-            events.update({event:{}})
+            return
         for d in events.get(event):
-            for func, req in d.items():
-                if req == "default":
-                    func(*args)
-                elif req == "self":
-                    func(s, *args)
+            for func, types in d.items():
+                req = types["require"]
+                typeof = types["type"]
+                if typeof == "sync":
+                    if req == "default":
+                        func(*args)
+                    elif req == "self":
+                        func(s, *args)
+                elif typeof == "async":
+                    if req == "default":
+                        utils.awaiter(func(*args))
+                    elif req == "self":
+                        utils.awaiter(func(s, *args))
     def event(self, event, require="default", type="sync"):
         def func_wrap(func):
             if event not in events.keys():
@@ -74,7 +84,7 @@ def SetCommand(command, args, s):
                         result = func(args)
                     elif req == "self":
                         result = func(s, args)
-                    elif req == "messgae":
+                    elif req == "message":
                         result = func(s["message"], args)
                     elif req == "client":
                         result = func(s["client"], args)
