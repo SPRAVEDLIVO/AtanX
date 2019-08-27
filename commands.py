@@ -100,7 +100,6 @@ def SetCommand(command, args, s):
                         utils.awaiter(func(s["message"], args))
                     elif req == "client":
                         utils.awaiter(func(s["client"], args))
-                    utils.awaiter(func(args)) if req == "default" else utils.awaiter(func(s, args))
     else:
         SimillarList = difflib.get_close_matches(command, cmds)
         if len(SimillarList) >= 1:
