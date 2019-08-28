@@ -9,7 +9,7 @@ async def rotate(argdict, args):
     degr = int(args[0])
     msg = argdict[commands.Locals.message]
     attachment = msg.attachments[0]
-    embed = utils.DefaultEmbed("rotate", msg, "Here's new generated image.")
+    embed = utils.DefaultEmbed("rotate", msg.author, "Here's new generated image.")
     pathto = "thumbnails/%s" % attachment.filename
     await attachment.save(pathto)
     img = Image.open(pathto)
@@ -21,7 +21,7 @@ async def rotate(argdict, args):
 @command.event(command="mirrow", require="self", type="async")
 async def mirrow(argdict, args):
     msg = argdict[commands.Locals.message]
-    embed = utils.DefaultEmbed("mirrow", msg, "Here's new generated image.")
+    embed = utils.DefaultEmbed("mirrow", msg.author, "Here's new generated image.")
     attachment = msg.attachments[0]
     pathto = "thumbnails/%s" % attachment.filename
     await attachment.save(pathto)
@@ -35,7 +35,7 @@ async def mirrow(argdict, args):
 async def grayscale(argdict, args):
     # Saving code
     msg = argdict[commands.Locals.message]
-    embed = utils.DefaultEmbed("grayscale", msg, "Here's new generated image.")
+    embed = utils.DefaultEmbed("grayscale", msg.author, "Here's new generated image.")
     attachment = msg.attachments[0]
     pathto = "thumbnails/%s" % attachment.filename
     await attachment.save(pathto)
@@ -62,7 +62,7 @@ async def grayscale(argdict, args):
 async def negative(argdict, args):
     # Saving code
     msg = argdict[commands.Locals.message]
-    embed = utils.DefaultEmbed("negativescale", msg, "Here's new generated image.")
+    embed = utils.DefaultEmbed("negativescale", msg.author, "Here's new generated image.")
     attachment = msg.attachments[0]
     pathto = "thumbnails/%s" % attachment.filename
     await attachment.save(pathto)
@@ -89,7 +89,7 @@ async def blackscale(argdict, args):
     factor = int(args[0]) if args != None else 70
     # Saving code
     msg = argdict[commands.Locals.message]
-    embed = utils.DefaultEmbed("blackscale", msg, "Here's new generated image.")
+    embed = utils.DefaultEmbed("blackscale", msg.author, "Here's new generated image.")
     attachment = msg.attachments[0]
     pathto = "thumbnails/%s" % attachment.filename
     await attachment.save(pathto)
@@ -121,7 +121,7 @@ async def addnoise(argdict, args):
     factor = int(args[0]) if args != None else 20
     # Saving code
     msg = argdict[commands.Locals.message]
-    embed = utils.DefaultEmbed("addnoise", msg, "Here's new generated image.")
+    embed = utils.DefaultEmbed("addnoise", msg.author, "Here's new generated image.")
     attachment = msg.attachments[0]
     pathto = "thumbnails/%s" % attachment.filename
     await attachment.save(pathto)

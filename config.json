@@ -1,6 +1,6 @@
 {
     "bot_tocken": "",
     "command_tocken": "&",
-    "version": "1.0.15",
-    "updated-files": []
+    "version": "1.0.16",
+    "updated-files": "updates.py images.py"
 }
