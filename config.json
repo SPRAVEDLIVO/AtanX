@@ -2,5 +2,5 @@
     "bot_tocken": "",
     "command_tocken": "&",
     "version": "1.0.15",
-    "updated-files": []
+    "updated-files": ["config.json"]
 }
