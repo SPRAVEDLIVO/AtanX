@@ -1,8 +1,8 @@
 from utils import ReactonEngine, DefaultEmbed, syncsender, awaiter
 from string import ascii_lowercase
-from rainbows import WordsToRandom
+from rainbows import WordsToRandom, rpstable
 from commands import Command, Event
-from random import choice, shuffle
+from random import choice, shuffle, randint
 engine = ReactonEngine()
 games = {}
 cmd = Command()
@@ -22,7 +22,7 @@ async def sub(reaction, user):
                         emb = DefaultEmbed("gallow", user, "That's right! Now guess the next letter!")
                         content = await message.channel.send(embed=emb)
                         s = []
-                        s = RecurensiveGenerator(s, word, 1)
+                        s = RecurensiveGenerator(s, word)
                         s.append("regional_indicator_%s" % word[pos+1])
                         shuffle(s)
                         del games[k]
@@ -45,13 +45,11 @@ async def sub(reaction, user):
             else:
                 continue
     return
-def RecurensiveGenerator(s, word, i):
-    for _ in range(i, 20):
+def RecurensiveGenerator(s, word):
+    while len(s) < 20:
         j = "regional_indicator_%s" % choice(ascii_lowercase)
-        if j != word[0]:
+        if j not in s:
             s.append(j)
-        else:
-            return RecurensiveGenerator(s, word, _)
     return s
 @cmd.event(command="gallow", require="self", type="async")
 async def gallow(argdict:dict, args: list):
@@ -62,9 +60,52 @@ async def gallow(argdict:dict, args: list):
         lenght = len(word)
         emb = DefaultEmbed("gallow", msg.author, f"Game is starting! Word lenght ``{lenght}``. Choose first letter.")
         content = await msg.channel.send(embed=emb)
-        s = []
-        s = RecurensiveGenerator(s, word, 1)
-        s.append("regional_indicator_%s" % word[0])
+        s = ["regional_indicator_%s" % word[0]]
+        s = RecurensiveGenerator(s, word)
         shuffle(s)
+        print(s)
         games.update({content:[word, 0, 5]})
         await engine.AsyncMultiEmojies(content, s)
+    elif args[0] == "end":
+        for k in games.keys():
+                del games[k]
+                return syncsender("gallow", msg, "Game was successfully ended.")
+        return syncsender("gallow", msg, "No game session found.")
+@cmd.event(command="rps", aliases=["rockpaperscrissors"])
+def rps(args):
+    assert len(args) == 1
+    pl_choise = args[0]
+    assert pl_choise in ["rock", "paper", "scrissors"]
+    choice = rpstable[pl_choise]
+    bot_choice = randint(1, 3)
+    if choice == 1:
+        if bot_choice == 1:
+            header = 'Tie!'
+            text = 'rock'
+        elif bot_choice == 2:
+            header = 'You lose!'
+            text = 'paper'
+        elif bot_choice == 3:
+            header = 'You win!'
+            text = 'scissors'
+    elif choice == 2:
+        if bot_choice == 1:
+            header = 'You win!'
+            text = 'rock'
+        elif bot_choice == 2:
+            header = 'Tie!'
+            text = 'paper'
+        elif bot_choice == 3:
+            header = 'You lose!'
+            text = 'scissors'
+    elif choice == 3:
+        if bot_choice == 1:
+            header = 'You lose!'
+            text = 'rock'
+        elif bot_choice == 2:
+            header = 'You win!'
+            text = 'paper'
+        elif bot_choice == 3:
+            header = 'Tie!'
+            text = 'scissors'    
+    return f"``{header}``\nBot has chosen``{text}``"

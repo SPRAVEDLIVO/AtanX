@@ -149,5 +149,21 @@
         "description": "Return random integer in range [a, b], including both end points.",
         "usage":"randint <a> <b>",
         "category": "random"
+    },
+    "gallow": {
+        "description": "Classic game gallow implemented in discord with our Reactions engine",
+        "usage": "gallow start",
+        "category": "minigames"
+    },
+    "rps": {
+        "description": "Play in rock paper scrissors against bot",
+        "usage": "rps <item>",
+        "category": "minigames",
+        "aliases": "rockpaperscrissors"
+    }, 
+    "crackmees":{
+        "description": "Steal some crackmes from https://crackmes.one/",
+        "usage": "crackmees <mode> *<args>",
+        "category": "pwn"
     }
 }
