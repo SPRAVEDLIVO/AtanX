@@ -1,4 +1,4 @@
-import commands, hashlib
+import commands, hashlib, zlib
 cmd = commands.Command()
 @cmd.event(command="hash")
 def hs(args):
@@ -29,5 +29,7 @@ def hs(args):
     elif hashtype == 'shake_128': return hashlib.new("shake_128", strtohash.encode("utf-8")).hexdigest()
     elif hashtype == 'blake2s256': return hashlib.new("blake2s256", strtohash.encode("utf-8")).hexdigest()
     #EO procedural generated code.
+    elif hashtype == "crc32": return str(zlib.crc32(strtohash.encode("utf-8")))
+    elif hashtype == "adler32": return str(zlib.adler32(strtohash.encode("utf-8")))
     else:
         return "Unknown hash algorythm."

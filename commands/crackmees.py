@@ -46,7 +46,10 @@ def a(message: Embed, args: list):
                 soup[j] = d.get_text()
         f = listsplit(soup, len(categories))
         d = [dict(zip(categories, i)) for i in f]
-        embed, crackme = RecursiveGenerator(d, platform.capitalize())
-        syncsender("crackmees", msg, embed)
-        awaiter(msg.channel.send(crackme))
-        return
+        try:
+            embed, crackme = RecursiveGenerator(d, platform.capitalize())
+            syncsender("crackmees", msg, embed)
+            awaiter(msg.channel.send(crackme))
+            return
+        except RecursionError:
+            return "Can't find appropriate OS"

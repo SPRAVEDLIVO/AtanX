@@ -1,4 +1,6 @@
-import discord, settings, commands
+import discord, settings, commands, updates
+updates.VersionCheck()
+
 config = settings.settings()
 bot_tocken = config["bot_tocken"]
 command_tocken = config["command_tocken"]

@@ -6,7 +6,7 @@
         },
     "hash": {
         "description": "Generate a hash of any string",
-        "available": "whirlpool, sha1, ripemd160, sha3_384, blake2s256, sha3_512, shake_128, md4, blake2b, sha3_224, sha256, blake2s, blake2b512, sha512, md5, sha384, md5-sha1, mdc2, sha224, shake_256, sha3_256",
+        "available": "whirlpool, sha1, ripemd160, sha3_384, blake2s256, sha3_512, shake_128, md4, blake2b, sha3_224, sha256, blake2s, blake2b512, sha512, md5, sha384, md5-sha1, mdc2, sha224, shake_256, sha3_256, crc32, adler32",
         "category": "crypto"
     },
     "cesar":{
