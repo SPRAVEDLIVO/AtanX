@@ -1,6 +1,7 @@
 import settings, commands, os
 from discord import Embed
 cmd = commands.Command()
+from utils import LambdaDecorator
 settings = settings.settings(file="packages.json")
 def MyStrJoin(lst: list) -> str:
     s = ""
@@ -36,3 +37,4 @@ def info(argdict: dict, args: list):
             return "No information about command founded."
 def GetCategorie(module: str) -> str:
     return settings.get(module).get("categorie")
+LambdaDecorator(cmd.event("link"), lambda args: "RAWhttps://discordapp.com/api/oauth2/authorize?client_id=613783460699701278&permissions=8&scope=bot")

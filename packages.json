@@ -165,5 +165,9 @@
         "description": "Steal some crackmes from https://crackmes.one/",
         "usage": "crackmees <mode> *<args>",
         "category": "pwn"
+    },
+	"link":{
+        "description": "Get link to invite bot to your server",
+        "category": "information"
     }
 }

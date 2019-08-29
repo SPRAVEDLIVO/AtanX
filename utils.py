@@ -1,6 +1,11 @@
 import asyncio, discord, settings
 from rainbows import EMOJI_UNICODE, EMOJI_ALIAS_UNICODE
 settings = settings.settings("packages.json")
+"""
+Documentation to flags.
+command flag: !ls - flag to send result in user's private messages
+result flag: RAW - flag to send result without embedding
+"""
 def GetCategorie(module):
     try:
         return settings.get(module).get("category")
@@ -20,7 +25,10 @@ def DefaultEmbed(command, author, result):
 def syncsender(command, msg, result, ls_flag=False, channel=None):
     typeof = type(result)
     m_typeof = type(msg)
-    if type(msg) == discord.Message:
+    if result[:3] == "RAW":
+        result = result[3:]
+        return asyncio.create_task(msg.channel.send(result)) if not ls_flag else asyncio.create_task(msg.author.send(result))
+    if m_typeof == discord.Message:
         if typeof == str:
             return asyncio.create_task(msg.channel.send(embed=DefaultEmbed(command, msg.author, result))) if not ls_flag else asyncio.create_task(msg.author.send(embed=DefaultEmbed(command, msg.author, result)))
         if typeof == discord.Embed:
@@ -58,3 +66,23 @@ class ReactonEngine(object):
         for k, v in EMOJI_ALIAS_UNICODE.items():
             if v == emoji:
                 return k
+def has_permessions(*args):
+    def func_wrap(func):
+        def arg_wrap(*rgs):
+            for arg in rgs:
+                typeof = type(arg)
+                if typeof == dict:
+                    message = arg["message"]
+                elif typeof == discord.Embed:
+                    message = arg
+                else:
+                    return
+                perms = message.author.permissions_in(message.channel)
+                for ar in args:
+                    if getattr(perms, ar):
+                        print("yep")
+                    else:
+                        return "Not enough permissions!"
+                return func(*rgs)
+        return arg_wrap
+    return func_wrap

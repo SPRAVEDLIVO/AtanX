@@ -1,6 +1,6 @@
 {
     "bot_tocken": "",
     "command_tocken": "&",
-    "version": "1.0.16",
-    "updated-files": "updates.py images.py"
+    "version": "1.0.17",
+    "updated-files": "config.json main.py packages.json utils.py commands/disc.py commands/info.py commands/minigames.py"
 }

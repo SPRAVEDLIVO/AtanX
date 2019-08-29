@@ -37,16 +37,16 @@ async def on_reaction_clear(message, reactions):
     eventer.SetEvent("on_reaction_clear", client, message, reactions)
 @client.event
 async def on_connect():
-    eventer.SetEvent("on_connect", client, client)
+    eventer.SetEvent("on_connect", client)
 @client.event
 async def on_disconnect():
-    eventer.SetEvent("on_disconnect", client, client)
+    eventer.SetEvent("on_disconnect", client)
 @client.event
 async def on_shard_ready(shard_id):
     eventer.SetEvent("on_shard_ready", client, shard_id)
 @client.event
 async def on_resumed():
-    eventer.SetEvent("on_resumed", client, client)
+    eventer.SetEvent("on_resumed", client)
 @client.event
 async def on_socket_raw_receive(msg):
     eventer.SetEvent("on_socket_raw_receive", client, msg)

@@ -23,6 +23,7 @@ def serverinfo(argdict, args):
     region = guild.region
     return "\nName: ``{}``\nID: ``{}``\nOwner: ``{}``\nCreated at: ``{}``\nMembers count: ``{}``\nRegion: ``{}``".format(name, server_id, owner, created_at,members, region)
 @command.event(command="ban", require="self")
+@utils.has_permessions("ban_members")
 def ban(argdict, args):
     assert len(args) >= 1
     msg = argdict["message"]
@@ -32,6 +33,7 @@ def ban(argdict, args):
         return "User %s was successfully banned." % str(user)
     return "No user found."
 @command.event(command="kick", require="self")
+@utils.has_permessions("kick_members")
 def kick(argdict, args):
     assert len(args) >= 1
     msg = argdict["message"]
@@ -40,3 +42,12 @@ def kick(argdict, args):
         utils.awaiter(msg.author.guild.kick(user))
         return "User %s was successfully kicked." % str(user)
     return "No user found."
+@command.event(command="clear", require="self", type="async")
+@utils.has_permessions("administrator")
+async def clear_channel(argdict:dict, args: list):
+    message = argdict["message"]
+    channel = message.channel
+    limit = int(args[0]) if args != None else 100
+    messages = await channel.history(limit=limit).flatten()
+    for msg in messages:
+        await msg.delete()

@@ -63,7 +63,6 @@ async def gallow(argdict:dict, args: list):
         s = ["regional_indicator_%s" % word[0]]
         s = RecurensiveGenerator(s, word)
         shuffle(s)
-        print(s)
         games.update({content:[word, 0, 5]})
         await engine.AsyncMultiEmojies(content, s)
     elif args[0] == "end":
