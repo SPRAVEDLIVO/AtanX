@@ -1,3 +1,4 @@
+#Module commands: tools to import all modules from specific path, command engine and event engine
 import importlib, os, utils, discord, difflib
 events = {}
 commands = {}
